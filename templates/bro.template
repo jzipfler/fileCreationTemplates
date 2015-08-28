@@ -1,0 +1,4 @@
+# Empty bro file
+
+event init_bro() {
+}
