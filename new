@@ -3,8 +3,8 @@
 FILENAME=""
 TEMPLATE=""
 TEMPLATE_DIR=""
-GLOBAL_INSTALL_DIR=/usr/local/share/fileCreationTemplate/template
-USER_INSTALL_DIR=${HOME}/.local/share/fileCreationTemplate/template
+GLOBAL_INSTALL_DIR=/usr/local/share/fileCreationTemplate/templates
+USER_INSTALL_DIR=${HOME}/.local/share/fileCreationTemplate/templates
 CURRENT_DIR=$(pwd)
 
 if test -d $GLOBAL_INSTALL_DIR; then
@@ -19,8 +19,17 @@ else
   exit 1
 fi
 
+printHelp() {
+  echo "\
+    ${0##*/} - Usage..."
+}
+
 while test $# -gt 0; do
   case $1 in
+    --help)
+      printHelp
+      exit 0
+      ;;
     --*)
       TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#--*}*)
       shift
@@ -37,5 +46,8 @@ while test $# -gt 0; do
 done
 
 if test -n "${FILENAME}" -a -n "${TEMPLATE}"; then
-  cp ${TEMPLATE_DIR}/${TEMPLATE} ${CURRENT_DIR}/${FILENAME}
+  cp ${TEMPLATE} ${FILENAME}
+else
+  echo "No filename or template given"
+  exit 1
 fi
