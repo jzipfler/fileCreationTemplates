@@ -28,4 +28,5 @@ install:
 
 .PHONY: clean
 clean:
-	@echo "Also not implemented yet."
+	@rm -rfv $(INSTALL_DIR)
+	@rm -fv $(PATH_DIR)/new
