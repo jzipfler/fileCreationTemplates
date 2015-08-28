@@ -1,0 +1,41 @@
+#!/bin/sh
+
+FILENAME=""
+TEMPLATE=""
+TEMPLATE_DIR=""
+GLOBAL_INSTALL_DIR=/usr/local/share/fileCreationTemplate/template
+USER_INSTALL_DIR=${HOME}/.local/share/fileCreationTemplate/template
+CURRENT_DIR=$(pwd)
+
+if test -d $GLOBAL_INSTALL_DIR; then
+  TEMPLATE_DIR=$GLOBAL_INSTALL_DIR
+elif test -d $USER_INSTALL_DIR; then
+  TEMPLATE_DIR=${USER_INSTALL_DIR}
+else
+  echo "\
+  Can not find template folder.
+  Program seems not correctly installed.
+  Abort."
+  exit 1
+fi
+
+while test $# -gt 0; do
+  case $1 in
+    --*)
+      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#--*}*)
+      shift
+      ;;
+    -*)
+      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#-*}*)
+      shift
+      ;;
+    *)
+      FILENAME=$1
+      shift
+      ;;
+  esac
+done
+
+if test -n "${FILENAME}" -a -n "${TEMPLATE}"; then
+  cp ${TEMPLATE_DIR}/${TEMPLATE} ${CURRENT_DIR}/${FILENAME}
+fi
