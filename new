@@ -24,10 +24,24 @@ printHelp() {
     ${0##*/} - Usage..."
 }
 
+listValidOptions() {
+  echo "\
+    All available (filetype) options:"
+  for files in $(ls templates); do
+    OPTION=$(echo $files | sed 's/\..*//' | sed 's/^/--/')
+    echo "\
+      $OPTION"
+  done
+}
+
 while test $# -gt 0; do
   case $1 in
     --help)
       printHelp
+      exit 0
+      ;;
+    --list-options|--list)
+      listValidOptions
       exit 0
       ;;
     --*)
