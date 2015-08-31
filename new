@@ -31,11 +31,11 @@ while test $# -gt 0; do
       exit 0
       ;;
     --*)
-      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#--*}*)
+      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#--*}* 2> /dev/null)
       shift
       ;;
     -*)
-      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#-*}*)
+      TEMPLATE=$(ls ${TEMPLATE_DIR}/${1#-*}* 2> /dev/null)
       shift
       ;;
     *)
